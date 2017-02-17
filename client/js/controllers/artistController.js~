@@ -1,0 +1,21 @@
+// Copyright IBM Corp. 2015. All Rights Reserved.
+// Node module: loopback-getting-started-intermediate
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
+angular
+  .module('app')
+    .controller('ArtistController', ArtistController);
+
+function ArtistController(Artist) {
+        let ctrl = this;
+        var artists;
+        var keywords;
+
+	ctrl.search = (keywords) => {
+            const params = { keywords };
+            ctrl.artists = Artist.searchArtistByName(params);
+	}
+};
+
+ArtistController.$inject = ['Artist'];

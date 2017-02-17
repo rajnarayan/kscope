@@ -1,0 +1,22 @@
+<div ng-init="ctrl.lookup()" ng-show="ctrl.artists.recordings">
+  <h3 ng-show="ctrl.artists.recordings.length">Recordings for {{ ctrl.artists.name }}</h3>
+  <table class="table table-striped"
+         ng-show="ctrl.artists.recordings.length" cellpadding="10">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Length</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="recording in ctrl.artists.recordings">
+        <th>{{ recording.id }}</a></th>
+        <td>{{ recording.title }}</th>
+        <td>{{ recording.length }}</td>
+        <td>{{ recording.disambiguation }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

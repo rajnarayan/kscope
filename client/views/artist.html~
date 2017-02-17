@@ -1,0 +1,3 @@
+    <div ng-repeat="artist in artists.artists.artists">
+      <span><a href="#lookup" ng-click="lookup(artist.id)">{{ artist.name }}</a><span></br>
+    </div>

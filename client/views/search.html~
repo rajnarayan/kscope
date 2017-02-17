@@ -1,0 +1,6 @@
+    <form class="well form-search">
+        <label>Artist Search:</label>
+        <input type="text" ng-model="keywords" class="input-medium search-query" placeholder="Keywords..." value="madonna">
+        <button type="submit" class="btn" ng-click="search()">Search</button>
+        <p class="help-block">Try for example: "madonna" or "beastie boys" or "cher"</p>        
+    </form>

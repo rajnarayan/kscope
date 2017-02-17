@@ -1,0 +1,28 @@
+// Copyright IBM Corp. 2015. All Rights Reserved.
+// Node module: loopback-getting-started-intermediate
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
+angular
+  .module('app')
+    .controller('ArtistController', ['$scope', 'Artist', function($scope,
+      Artist) {
+        var keywords;
+//      $scope.artists = Artist.searchArtistByName();
+//    $scope.artists = Artist.search({
+//      filter: {
+//        include: [
+//          'coffeeShop',
+//          'reviewer'
+//        ]
+//      }
+//    });
+//   }]);
+	$scope.search = function() {
+            keywords = $scope.keywords;
+            const params = { keywords };
+            console.log("In Artist Search");
+            console.log($scope.keywords);
+            $scope.artists = Artist.searchArtistByName(params);
+	}
+  }]);
