@@ -14,14 +14,19 @@ function ArtistController($stateParams, $location, Artist) {
     var info     = $stateParams.info;
     var artists;
     
-    ctrl.keywords = $stateParams.keywords;
-    ctrl.artistId = $stateParams.artistId;
-    ctrl.info     = $stateParams.info;
+    ctrl.initState = () => {
+        if($location.search().artistId) ctrl.artistId = $location.search().artistId;
+        if($stateParams.artistId) ctrl.artistId = $stateParams.artistId;
+        if($location.search().info) ctrl.info = $location.search().info;
+        if($stateParams.info) ctrl.info = $stateParams.info;
+        ctrl.keywords = $stateParams.keywords;
+    }
 
     ctrl.search = (keywords) => {
-        artistId = ctrl.artistId = $location.search().artistId;
-        info     = ctrl.info     = $location.search().info;
-        keywords = ctrl.keywords = $stateParams.keywords;
+        ctrl.initState();
+        artistId = ctrl.artistId;
+        info     = ctrl.info;
+        keywords = ctrl.keywords;
         const params = { keywords };
         Artist.searchArtistByName(params).$promise
 	    .then(artists => {
@@ -33,9 +38,10 @@ function ArtistController($stateParams, $location, Artist) {
     }
 
     ctrl.lookup = (info) => {
-        artistId = ctrl.artistId = $stateParams.artistId;
-        info     = ctrl.info     = $stateParams.info;
-        keywords = ctrl.keywords = $stateParams.keywords;
+        ctrl.initState();
+        artistId = ctrl.artistId;
+        info     = ctrl.info;
+        keywords = ctrl.keywords;
 	//        artistId = "79239441-bfd5-4981-a70c-55c3f15c1287";
         if(!info) info = "releases";
         if(!artistId || !info) return;
