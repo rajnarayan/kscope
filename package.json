@@ -4,7 +4,8 @@
   "main": "server/server.js",
   "scripts": {
     "lint": "eslint .",
-    "start": "node-inspector & nodemon --debug .",
+    "dev": "node-inspector & nodemon --debug .",
+    "start": "node .",
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
