@@ -1,6 +1,0 @@
-<div ng-init="ctrl.lookup()" ng-show="ctrl.artists.releases">
-List of Releases for artist {{ ctrl.artists.name }}
-    <div ng-repeat="release in ctrl.artists.releases">
-      <span><a href="#lookup" ng-click="lookup(release.id)">{{ release.title }} -- {{ release.date }}</a><span></br>
-    </div>
-</div>
