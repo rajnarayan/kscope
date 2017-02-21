@@ -17,6 +17,9 @@ function ArtistController($stateParams, $location, Artist) {
     var recordings;
     var recordingId = $stateParams.recordingId;
     var recording;
+
+    var artist      = $stateParams.artist;
+    var song        = $stateParams.song;
     
     ctrl.initState = () => {
         if($location.search().artistId) ctrl.artistId = $location.search().artistId;
@@ -29,6 +32,9 @@ function ArtistController($stateParams, $location, Artist) {
         if($stateParams.releaseId) ctrl.releaseId = $stateParams.releaseId;
         if($location.search().recordingId) ctrl.recordingId = $location.search().recordingId;
         if($stateParams.recordingId) ctrl.recordingId = $stateParams.recordingId;
+
+        if($location.search().artist) ctrl.artist = $location.search().artist;
+        if($stateParams.song) ctrl.song = $stateParams.song;
     }
 
     ctrl.search = (keywords) => {
@@ -101,6 +107,20 @@ function ArtistController($stateParams, $location, Artist) {
             });
     }
 
+    ctrl.searchSong = (keywords) => {
+        ctrl.initState();
+        song   = ctrl.song;
+        artist = ctrl.artist;
+        
+        const params = { song, artist };
+	Artist.searchSongByName(params).$promise
+	    .then(songs => {
+	    	ctrl.songs = songs.songs;
+	        })
+            .catch(err => {
+              console.log(err);
+            });
+    }
 };
 
 ArtistController.$inject = ['$stateParams','$location','Artist'];

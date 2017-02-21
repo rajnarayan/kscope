@@ -15,6 +15,23 @@
     </div>
     </header>
 
+    <nav class="navbar navbar-default">
+      <div class="container-fluid" ng-init="ctrl.initState()" ng-show"ctrl.artistId">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Search by</a>
+        </div>
+        <ul class="nav navbar-nav">
+              <li>
+                <a ui-sref="song()" ui-sref-active="active">Song</a>
+              </li>
+              <li>
+                <a ui-sref="search.releases()">Artist</a>
+              </li>
+        </ul>
+      </div>
+    </nav>
+
+
     <div ui-view></div>
 
     <script

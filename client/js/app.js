@@ -47,6 +47,12 @@ angular
         controller: 'ArtistController',
         controllerAs: 'ctrl'
       })
+      .state('song', {
+        url: '/song?artist?song',
+        templateUrl: 'views/song.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
       .state('add-review', {
         url: '/add-review',
         templateUrl: 'views/review-form.html',
@@ -97,7 +103,7 @@ angular
         url: '/sign-up/success',
         templateUrl: 'views/sign-up-success.html'
       });
-    $urlRouterProvider.otherwise('search');
+    $urlRouterProvider.otherwise('song');
   }])
   .run(['$rootScope', '$state', 'LoopBackAuth', 'AuthService', function($rootScope, $state, LoopBackAuth, AuthService) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {

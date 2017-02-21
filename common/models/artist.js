@@ -88,6 +88,22 @@ module.exports = function(Artist) {
 	  });
   };
 
+  Artist.searchSongByName = function(song, artist, cb) {
+
+      if (song == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+
+    var resp;
+      nb.search('recording', {recording: song, artist: artist, country:'US'}, function(err, response){
+        resp = response; 
+        console.log(resp);
+        cb(null, resp);
+    });
+  };
+
   Artist.remoteMethod(
     'status', {
       http: {
@@ -159,5 +175,21 @@ module.exports = function(Artist) {
 	        { arg: 'recording', type: 'object'}
               ]
          });
+
+  Artist.remoteMethod(
+    'searchSongByName', {
+      http: {
+        path: '/searchSongByName',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'song', type: 'string'},
+	        { arg: 'artist', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'songs', type: 'object'}
+              ]
+         });
+
 
 };
