@@ -1,5 +1,4 @@
-<ng-include src="'views/artistnav.html'"></ng-include>
-<div ng-init="ctrl.lookupArtist()" ng-show="ctrl.artists.works">
+<div ng-init="ctrl.lookup()" ng-show="ctrl.artists.works">
   <h3 ng-show="ctrl.artists.works.length">Works for {{ ctrl.artists.name }}</h3>
   <table class="table table-striped"
          ng-show="ctrl.artists.works.length" cellpadding="10">

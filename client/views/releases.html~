@@ -15,7 +15,8 @@
     </thead>
     <tbody>
       <tr ng-repeat="release in ctrl.artists.releases">
-        <th><a ui-sref="search.release({artistId: ctrl.artistId, releaseId: release.id, info: ''})">{{ release.id }}</a></th>
+        <th><a ui-sref="search.release({releaseId: release.id, info: 'recordings'})">{{ release.id }}</a></th>
+        <th>{{ release.id }}</a></th>
         <td>{{ release.title }}</th>
         <td>{{ release.date }}</td>
         <td>{{ release.country }}</td>

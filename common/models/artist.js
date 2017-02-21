@@ -54,6 +54,40 @@ module.exports = function(Artist) {
 	  });
   };
 
+  Artist.lookupRelease = function(releaseId, info, cb) {
+
+      if (releaseId == null) {
+          console.log("No release defined");
+          cb(null, null);
+          return;
+      }
+
+      var resp;
+      var inc = {inc:info}
+      nb.release(releaseId, inc, function(err, response){
+        resp = response; 
+        console.log(resp);
+        cb(null, resp);
+	  });
+  };
+
+  Artist.lookupRecording = function(recordingId, info, cb) {
+
+      if (recordingId == null) {
+          console.log("No recording defined");
+          cb(null, null);
+          return;
+      }
+
+      var resp;
+      var inc = {inc:info}
+      nb.recording(recordingId, inc, function(err, response){
+        resp = response; 
+        console.log(resp);
+        cb(null, resp);
+	  });
+  };
+
   Artist.remoteMethod(
     'status', {
       http: {
@@ -96,5 +130,34 @@ module.exports = function(Artist) {
               ]
          });
 
+  Artist.remoteMethod(
+    'lookupRelease', {
+      http: {
+        path: '/lookupRelease',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'releaseId', type: 'string'},
+	        { arg: 'info', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'recordings', type: 'object'}
+              ]
+         });
+
+  Artist.remoteMethod(
+    'lookupRecording', {
+      http: {
+        path: '/lookupRecording',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'recordingId', type: 'string'},
+	        { arg: 'info', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'recording', type: 'object'}
+              ]
+         });
 
 };

@@ -35,6 +35,18 @@ angular
         controller: 'ArtistController',
         controllerAs: 'ctrl'
       })
+      .state('search.release', {
+        url: '/release?artistId?releaseId?info',
+        templateUrl: 'views/release.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      .state('search.recording', {
+        url: '/recording?artistId?releaseId?recordingId?info',
+        templateUrl: 'views/recording.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
       .state('add-review', {
         url: '/add-review',
         templateUrl: 'views/review-form.html',
