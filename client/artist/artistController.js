@@ -64,9 +64,6 @@ function ArtistController($stateParams, $location, Artist) {
     var recordingId;
     var recording;
 
-    var artist;
-    var song;
-    
     ctrl.initState = () => {
         if($location.search().artistId) ctrl.artistId = $location.search().artistId;
         if($stateParams.artistId) ctrl.artistId = $stateParams.artistId;
@@ -78,9 +75,6 @@ function ArtistController($stateParams, $location, Artist) {
         if($stateParams.releaseId) ctrl.releaseId = $stateParams.releaseId;
         if($location.search().recordingId) ctrl.recordingId = $location.search().recordingId;
         if($stateParams.recordingId) ctrl.recordingId = $stateParams.recordingId;
-
-        if($location.search().artist) ctrl.artist = $location.search().artist;
-        if($stateParams.song) ctrl.song = $stateParams.song;
     }
 
     ctrl.searchArtist = (keywords) => {
@@ -147,21 +141,6 @@ function ArtistController($stateParams, $location, Artist) {
 	Artist.lookupRecording(params).$promise
 	    .then(recording => {
 	    	ctrl.recording = recording.recording;
-	        })
-            .catch(err => {
-              console.log(err);
-            });
-    }
-
-    ctrl.searchSong = (keywords) => {
-        ctrl.initState();
-        song   = ctrl.song;
-        artist = ctrl.artist;
-        
-        const params = { song, artist };
-	Artist.searchSongByName(params).$promise
-	    .then(songs => {
-	    	ctrl.songs = songs.songs;
 	        })
             .catch(err => {
               console.log(err);
