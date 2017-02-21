@@ -4,22 +4,68 @@
 // License text available at https://opensource.org/licenses/MIT
 
 angular
-  .module('app')
+  .module('artist', [])
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
+      $urlRouterProvider) {
+    $stateProvider
+      .state('search', {
+        url: '/search?keywords',
+        templateUrl: 'artist/search.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      .state('search.releases', {
+        url: '/releases?artistId?info',
+        templateUrl: 'artist/releases.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      .state('search.works', {
+        url: '/works?artistId?info',
+        templateUrl: 'artist/works.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      .state('search.recordings', {
+        url: '/recordings?artistId?info',
+        templateUrl: 'artist/recordings.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      .state('search.release', {
+        url: '/release?artistId?releaseId?info',
+        templateUrl: 'artist/release.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      .state('search.recording', {
+        url: '/recording?artistId?releaseId?recordingId?info',
+        templateUrl: 'artist/recording.html',
+        controller: 'ArtistController',
+        controllerAs: 'ctrl'
+      })
+      }]);
+
+angular
+  .module('artist')
     .controller('ArtistController', ArtistController);
 
 function ArtistController($stateParams, $location, Artist) {
     let ctrl        = this;
-    var keywords    = $stateParams.keywords;
-    var artistId    = $stateParams.artistId;
-    var info        = $stateParams.info;
+
+    var info;
+    var keywords;
+    var artistId;
     var artists;
-    var releaseId   = $stateParams.releaseId;
+
+    var releaseId;
     var recordings;
-    var recordingId = $stateParams.recordingId;
+
+    var recordingId;
     var recording;
 
-    var artist      = $stateParams.artist;
-    var song        = $stateParams.song;
+    var artist;
+    var song;
     
     ctrl.initState = () => {
         if($location.search().artistId) ctrl.artistId = $location.search().artistId;
@@ -37,7 +83,7 @@ function ArtistController($stateParams, $location, Artist) {
         if($stateParams.song) ctrl.song = $stateParams.song;
     }
 
-    ctrl.search = (keywords) => {
+    ctrl.searchArtist = (keywords) => {
         ctrl.initState();
         artistId = ctrl.artistId;
         info     = ctrl.info;

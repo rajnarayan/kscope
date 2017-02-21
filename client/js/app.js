@@ -6,53 +6,13 @@
 angular
   .module('app', [
     'ui.router',
-    'lbServices'
+    'lbServices',
+    'artist',
+    'song'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
       $urlRouterProvider) {
     $stateProvider
-      .state('search', {
-        url: '/search?keywords',
-        templateUrl: 'views/search.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
-      .state('search.releases', {
-        url: '/releases?artistId?info',
-        templateUrl: 'views/releases.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
-      .state('search.works', {
-        url: '/works?artistId?info',
-        templateUrl: 'views/works.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
-      .state('search.recordings', {
-        url: '/recordings?artistId?info',
-        templateUrl: 'views/recordings.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
-      .state('search.release', {
-        url: '/release?artistId?releaseId?info',
-        templateUrl: 'views/release.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
-      .state('search.recording', {
-        url: '/recording?artistId?releaseId?recordingId?info',
-        templateUrl: 'views/recording.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
-      .state('song', {
-        url: '/song?artist?song',
-        templateUrl: 'views/song.html',
-        controller: 'ArtistController',
-        controllerAs: 'ctrl'
-      })
       .state('add-review', {
         url: '/add-review',
         templateUrl: 'views/review-form.html',
