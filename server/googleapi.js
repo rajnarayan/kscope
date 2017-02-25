@@ -6,7 +6,7 @@ module.exports = function () {
     var fs          = require('fs');
     var readline    = require('readline');
     var google      = require('googleapis');
-    var googleAuth  = require('googleapis/node_modules/google-auth-library');
+    var googleAuth  = require('google-auth-library');
     var util        = require('util');
     
     // If modifying these scopes, delete your previously saved credentials
