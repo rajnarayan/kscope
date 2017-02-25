@@ -20,6 +20,7 @@ module.exports = function () {
     ];
     var TOKEN_DIR   = (process.env.HOME || process.env.HOMEPATH ||
     		 process.env.USERPROFILE) + '/.credentials/';
+    var TOKEN_DIR   = '.credentials/';
     var TOKEN_PATH  = TOKEN_DIR + 'kscope-nodejs-googleapi.json';
 
 
