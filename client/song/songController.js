@@ -32,6 +32,12 @@ angular
         controller: 'SongController',
         controllerAs: 'ctrl'
          })
+      .state('oauth', {
+        url: '/google_oauth?callback',
+	templateUrl: 'views/google_oauth.html',
+        controller: 'SongController',
+        controllerAs: 'ctrl'
+      })
       $urlRouterProvider.otherwise('songs');
 	}]);
 
@@ -46,7 +52,21 @@ function SongController($stateParams, $location, Artist) {
     var artist;
     var song;
     var videos;
-    
+  
+    var authToken;
+        
+    ctrl.getToken = () => {
+        var code = $location.search().code;
+        const params = { code };
+	Artist.googleAuth(params).$promise
+	    .then(authToken => {
+	    	ctrl.authToken = authToken.authToken;
+	        })
+            .catch(err => {
+              console.log(err);
+            });
+    }
+
     ctrl.initState = () => {
         if($location.search().artist) ctrl.artist = $location.search().artist;
         if($stateParams.song) ctrl.song = $stateParams.song;

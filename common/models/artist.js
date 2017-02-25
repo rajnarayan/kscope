@@ -148,6 +148,28 @@ module.exports = function(Artist) {
     	});
   };
 
+  Artist.googleAuth = function(code, cb) {
+
+      if (code == null) {
+          console.log("No google auth code");
+          cb(null, null);
+          return;
+      }
+
+      ga.getToken(code, function(err, tokens) {
+    	  if (err) {
+    	      console.log('The API returned an error: ' + err);
+              cb(null, null);
+              return;
+    	  }
+          if (response) {
+              console.log(util.inspect(response, false, null));
+              cb(null, tokens);
+              return;
+          }
+    	});
+  };
+
   Artist.remoteMethod(
     'status', {
       http: {
@@ -201,7 +223,7 @@ module.exports = function(Artist) {
 	        { arg: 'info', type: 'string'}
 	      ],
      returns: [
-	        { arg: 'recordings', type: 'object'}
+	       { arg: 'recordings', type: 'object'}
               ]
          });
 
@@ -265,4 +287,17 @@ module.exports = function(Artist) {
               ]
          });
 
+  Artist.remoteMethod(
+    'googleAuth', {
+      http: {
+        path: '/googleAuth',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'code', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'authToken', type: 'string'}
+              ]
+         });
 };

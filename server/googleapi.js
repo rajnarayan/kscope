@@ -8,6 +8,9 @@ module.exports = function () {
     var google      = require('googleapis');
     var googleAuth  = require('google-auth-library');
     var util        = require('util');
+    var http        = require('http');
+    var url         = require('url');
+    var querystring = require('querystring');
     
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/drive-nodejs-quickstart.json
@@ -19,6 +22,32 @@ module.exports = function () {
     		 process.env.USERPROFILE) + '/.credentials/';
     var TOKEN_PATH  = TOKEN_DIR + 'kscope-nodejs-googleapi.json';
 
+
+    ctrl.getToken = (code, callback) => {
+        var authUrl = oauth2Client.generateAuthUrl({
+    	    access_type: 'offline',
+    	    scope: SCOPES
+    	});
+        ctrl.authUrl = authUrl;
+        console.log('Authorize this app by visiting this url: ', authUrl);
+
+
+	//        var qs = querystring.parse(url.parse(request.url).query);
+        self.oAuth2Client.getToken(code, function (err, tokens) {
+          if (err) {
+            console.error('Error getting oAuth tokens: ' + err);
+            callback("Error getting auth token", null);
+            return;
+          }
+          ctrl.authToken = tokens;
+      	  ctrl.storeToken(tokens);
+  
+          console.log("Tokens");
+          console.log(tokens);
+          callback(null, tokens);
+          return;
+  	  });
+    }
 
     ctrl.initState = (callback) => {
         // Load client secrets from a local file.
@@ -43,6 +72,7 @@ module.exports = function () {
      * @param {function} callback The callback to call with the authorized client.
      */
     ctrl.authorize = (credentials, callback) => {
+	console.log("Authorizing with following credientials:");
     	console.log(credentials);
         var clientSecret = credentials.web.client_secret;
         var clientId = credentials.web.client_id;
@@ -50,13 +80,15 @@ module.exports = function () {
         var auth = new googleAuth();
         var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
     
+        console.log("Token Path: " + TOKEN_PATH);
         // Check if we have previously stored a token.
         fs.readFile(TOKEN_PATH, function(err, token) {
     	    if (err) {
+                console.log("Unable to read Token: " + TOKEN_PATH);
     		ctrl.getNewToken(oauth2Client, callback);
     	    } else {
     		oauth2Client.credentials = JSON.parse(token);
-		console.log("credentials");
+		console.log("Token parsed:");
                 console.log(oauth2Client);
     		if(callback)
                     callback(oauth2Client);
