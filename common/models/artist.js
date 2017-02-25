@@ -2,8 +2,12 @@
 
 module.exports = function(Artist) {
 
-  var NB  = require('nodebrainz');
-  var nb  = new NB({userAgent:'kscope/0.1 ( http://localhost )'});
+  var NB    = require('nodebrainz');
+  var nb    = new NB({userAgent:'kscope/0.1 ( http://localhost )'});
+	    
+  var GA    = require('../../server/googleapi.js');
+  var ga    = new GA();
+  var util  = require('util');
 
   Artist.status = function(cb) {
     var currentDate = new Date();
@@ -104,6 +108,46 @@ module.exports = function(Artist) {
     });
   };
 
+  Artist.searchArtistBySong = function(song, cb) {
+
+      if (song == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+
+    var resp;
+      nb.search('recording', {recording: song, country:'US'}, function(err, response){
+        resp = response; 
+        console.log(resp);
+        cb(null, resp);
+    });
+  };
+
+  Artist.searchVideosByArtistAndSong = function(song, artist, cb) {
+
+      if (song == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+
+    var resp;
+    var query = song + " by " + artist;
+    ga.youtubeSearch(query, function(err, response) {
+    	  if (err) {
+    	      console.log('The API returned an error: ' + err);
+              cb(null, null);
+              return;
+    	  }
+          if (response) {
+              console.log(util.inspect(response, false, null));
+              cb(null, response);
+              return;
+          }
+    	});
+  };
+
   Artist.remoteMethod(
     'status', {
       http: {
@@ -191,5 +235,34 @@ module.exports = function(Artist) {
               ]
          });
 
+
+  Artist.remoteMethod(
+    'searchArtistBySong', {
+      http: {
+        path: '/searchArtistBySong',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'song', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'artists', type: 'object'}
+              ]
+         });
+
+  Artist.remoteMethod(
+    'searchVideosByArtistAndSong', {
+      http: {
+        path: '/searchVideosByArtistAndSong',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'song', type: 'string'},
+	        { arg: 'artist', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'videos', type: 'object'}
+              ]
+         });
 
 };

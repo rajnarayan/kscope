@@ -1,0 +1,29 @@
+<div ng-init="ctrl.lookupVideos()" ng-show="ctrl.videos">
+  <!-- h3 ng-show="ctrl.videos.items.length">Videos for Song: {{ ctrl.song }}</h3 -->
+  <table class="table table-striped"
+         ng-show="ctrl.videos.items.length" cellpadding="10">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Thumbnail</th>
+        <th>Video</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="video in ctrl.videos.items">
+        <th>{{ video.id.videoId }}</th>
+        <td><img ng-src="{{ video.snippet.thumbnails.default.url }}"/></th>
+        <td>
+            <iframe type="text/html" width="300" height="250" ng-src="{{ video.url }}" frameborder="0"></iframe>
+        </td>
+        <td>{{ video.snippet.title }}</th>
+        <td>{{ video.snippet.description }}</th>
+        <td>{{ video.snippet.publishedAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
