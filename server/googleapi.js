@@ -20,7 +20,7 @@ module.exports = function () {
     ];
     var TOKEN_DIR   = (process.env.HOME || process.env.HOMEPATH ||
     		 process.env.USERPROFILE) + '/.credentials/';
-    var TOKEN_DIR   = '.credentials/';
+    var TOKEN_DIR   = '/tmp/';
     var TOKEN_PATH  = TOKEN_DIR + 'kscope-nodejs-googleapi.json';
 
 
@@ -84,7 +84,7 @@ module.exports = function () {
         console.log("Token Path: " + TOKEN_PATH);
         // Check if we have previously stored a token.
         fs.readFile(TOKEN_PATH, function(err, token) {
-    	    if (err) {
+    	    if (err || !token) {
                 console.log("Unable to read Token: " + TOKEN_PATH);
     		ctrl.getNewToken(oauth2Client, callback);
     	    } else {
