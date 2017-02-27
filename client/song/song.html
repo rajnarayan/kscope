@@ -1,11 +1,12 @@
-<div>
+<div ng-init="ctrl.initState()">
     <form class="well form-search">
         <label>Song Search:</label>
         <input type="text" ng-model="ctrl.song"   class="input-medium search-query" placeholder="The End...." value="The End"></input>
         <input type="text" ng-model="ctrl.artist"   class="input-medium search-query" placeholder="The Doors...." value="The Doors"></input>
+        <input type="text" ng-model="ctrl.album"   class="input-medium search-query" placeholder="The Doors...." value="The Doors"></input>
         <!-- button href="#" ng-click="ctrl.getArtistBySong(ctrl.song)" class="btn">Search</button>
         <select ng-options="artist as artist.name for artist in ctrl.artists track by artist.id" ng-model="ctrl.artist" ng-show="ctrl.artists"></select -->
-        <button ui-sref="song.songs({song: ctrl.song, artist: ctrl.artist})" class="btn" >Search</button>
+        <button ui-sref="song.songs({song: ctrl.song, album: ctrl.album, artist: ctrl.artist})" class="btn" >Search</button>
     </form>
 
     <ng-include src="'song/songnav.html'"></ng-include>

@@ -26,6 +26,12 @@ angular
         controller: 'SongController',
         controllerAs: 'ctrl'
         })
+      .state('song.lyrics', {
+        url: '/lyrics',
+        templateUrl: 'song/lyrics.html',
+        controller: 'SongController',
+        controllerAs: 'ctrl'
+        })
       .state('song.videos', {
         url: '/videos',
         templateUrl: 'song/videos.html',
@@ -58,6 +64,7 @@ function SongController($stateParams, $location, Artist) {
     var artist;
     var album;
     var song;
+    var lyrics;
     var videos;
   
     var authToken;
@@ -75,12 +82,12 @@ function SongController($stateParams, $location, Artist) {
     }
 
     ctrl.initState = () => {
-        if($location.search().artist) ctrl.artist = $location.search().artist;
-        if($location.search().album) ctrl.album = $location.search().album;
-        if($location.search().song) ctrl.song = $location.search().song;
         if($stateParams.artist) ctrl.artist = $stateParams.artist;
         if($stateParams.album) ctrl.album = $stateParams.album;
         if($stateParams.song) ctrl.song = $stateParams.song;
+        if($location.search().artist) ctrl.artist = $location.search().artist;
+        if($location.search().album) ctrl.album = $location.search().album;
+        if($location.search().song) ctrl.song = $location.search().song;
     }
 
     ctrl.searchSong = (keywords) => {
@@ -92,6 +99,23 @@ function SongController($stateParams, $location, Artist) {
 	Artist.searchSongByName(params).$promise
 	    .then(songs => {
 	    	ctrl.songs = songs.songs;
+	        })
+            .catch(err => {
+              console.log(err);
+            });
+
+	//	if (song && artist) ctrl.getLyrics();
+    }
+
+    ctrl.getLyrics = () => {
+        ctrl.initState();
+        song   = ctrl.song;
+        artist = ctrl.artist;
+        
+        const params = { song, artist };
+	Artist.getLyrics(params).$promise
+	    .then(lyrics => {
+	    	ctrl.lyrics = lyrics.lyrics;
 	        })
             .catch(err => {
               console.log(err);

@@ -2,18 +2,20 @@
 
 module.exports = function(Artist) {
 
+  //MusicBrainz
   var NB    = require('nodebrainz');
   var nb    = new NB({userAgent:'kscope/0.1 ( http://localhost )'});
 	    
-  var GA    = require('../../server/googleapi.js');
-  var ga    = new GA();
+  // Youtube
+//  var GA    = require('../../server/googleapi.js');
+//  var ga    = new GA();
   var util  = require('util');
 
   var google = require('googleapis');
   var GOOGLE_API_KEY = 'AIzaSyAA75xUV5Rxhtd5Zxo5Vw7Nc7IKKCOq_N8'; // specify your API key here
   var googleService = google.youtube('v3');
 
-
+  //Gracenote
   var Gracenote = require("node-gracenote");
   var clientId  = "864237780-FF3616097A52880965697A0A4ADC1DA3";
   var clientTag = "FF3616097A52880965697A0A4ADC1DA3";
@@ -21,6 +23,8 @@ module.exports = function(Artist) {
   var userId    = "51044503332816635-F643EB286C619F0C4869D42B3EA29C8E";
   var GN = new Gracenote(clientId,clientTag,userId);
 
+  //MusixMatch
+  var lyr = require('lyrics-fetcher');
 
   Artist.status = function(cb) {
     var currentDate = new Date();
@@ -226,6 +230,25 @@ module.exports = function(Artist) {
   };
 
 
+  Artist.getLyrics = function(song, artist, cb) {
+
+      if (song == null && artist == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+ 
+      lyr.fetch(artist, song, function (err, lyrics) {
+	  if (err) {
+              console.log(err);
+              cb(null, null);
+              return;
+	  }
+          console.log(lyrics);
+          cb(null, lyrics);
+      });
+  };
+
   Artist.googleAuth = function(code, cb) {
 
       if (code == null) {
@@ -379,6 +402,21 @@ module.exports = function(Artist) {
 	      ],
      returns: [
 	        { arg: 'videos', type: 'object'}
+              ]
+         });
+
+  Artist.remoteMethod(
+    'getLyrics', {
+      http: {
+        path: '/getLyrics',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'song', type: 'string'},
+	        { arg: 'artist', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'lyrics', type: 'object'}
               ]
          });
 
