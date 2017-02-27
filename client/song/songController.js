@@ -32,6 +32,12 @@ angular
         controller: 'SongController',
         controllerAs: 'ctrl'
          })
+      .state('song.album', {
+        url: '/album?album',
+        templateUrl: 'song/album.html',
+        controller: 'SongController',
+        controllerAs: 'ctrl'
+         })
       .state('oauth', {
         url: '/google_oauth?callback',
 	templateUrl: 'views/google_oauth.html',
@@ -50,6 +56,7 @@ function SongController($stateParams, $location, Artist) {
     let ctrl        = this;
 
     var artist;
+    var album;
     var song;
     var videos;
   
@@ -69,6 +76,10 @@ function SongController($stateParams, $location, Artist) {
 
     ctrl.initState = () => {
         if($location.search().artist) ctrl.artist = $location.search().artist;
+        if($location.search().album) ctrl.album = $location.search().album;
+        if($location.search().song) ctrl.song = $location.search().song;
+        if($stateParams.artist) ctrl.artist = $stateParams.artist;
+        if($stateParams.album) ctrl.album = $stateParams.album;
         if($stateParams.song) ctrl.song = $stateParams.song;
     }
 
@@ -79,6 +90,22 @@ function SongController($stateParams, $location, Artist) {
         
         const params = { song, artist };
 	Artist.searchSongByName(params).$promise
+	    .then(songs => {
+	    	ctrl.songs = songs.songs;
+	        })
+            .catch(err => {
+              console.log(err);
+            });
+    }
+
+    ctrl.searchAlbum = () => {
+        ctrl.initState();
+        song   = "";
+        album  = ctrl.album;
+        artist = ctrl.artist;
+        
+        const params = { song, album, artist };
+	Artist.searchAlbum(params).$promise
 	    .then(songs => {
 	    	ctrl.songs = songs.songs;
 	        })
@@ -110,7 +137,8 @@ function SongController($stateParams, $location, Artist) {
 	Artist.searchVideosByArtistAndSong(params).$promise
 	    .then(videos => {
 	    	ctrl.videos = videos.videos;
-                ctrl.videos.items.forEach(function(video){
+                if (ctrl.videos)
+                   ctrl.videos.items.forEach(function(video){
 		    video.url = "https://www.youtube.com/embed/" + video.id.videoId;
 		    });
 	        })

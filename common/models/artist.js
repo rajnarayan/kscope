@@ -9,6 +9,19 @@ module.exports = function(Artist) {
   var ga    = new GA();
   var util  = require('util');
 
+  var google = require('googleapis');
+  var GOOGLE_API_KEY = 'AIzaSyAA75xUV5Rxhtd5Zxo5Vw7Nc7IKKCOq_N8'; // specify your API key here
+  var googleService = google.youtube('v3');
+
+
+  var Gracenote = require("node-gracenote");
+  var clientId  = "864237780-FF3616097A52880965697A0A4ADC1DA3";
+  var clientTag = "FF3616097A52880965697A0A4ADC1DA3";
+  var userId    = null;
+  var userId    = "51044503332816635-F643EB286C619F0C4869D42B3EA29C8E";
+  var GN = new Gracenote(clientId,clientTag,userId);
+
+
   Artist.status = function(cb) {
     var currentDate = new Date();
     var currentHour = currentDate.getHours();
@@ -100,8 +113,14 @@ module.exports = function(Artist) {
           return;
       }
 
-    var resp;
-      nb.search('recording', {recording: song, artist: artist, country:'US'}, function(err, response){
+      var resp;
+      var params;
+      if (artist)
+          params = {recording: song, artist: artist, country:'US'};
+      else
+          params = {recording: song, country:'US'};
+
+      nb.search('recording', params, function(err, response){
         resp = response; 
         console.log(resp);
         cb(null, resp);
@@ -132,9 +151,19 @@ module.exports = function(Artist) {
           return;
       }
 
-    var resp;
-    var query = song + " by " + artist;
-    ga.youtubeSearch(query, function(err, response) {
+      var resp;
+      var query;
+      if (artist) 
+          query = song + " by " + artist;
+      else
+          query = song;
+
+      googleService.search.list({
+         key: GOOGLE_API_KEY,
+         order: 'relevance',
+         part: 'id,snippet',
+         q: query
+       }, function(err, response) {
     	  if (err) {
     	      console.log('The API returned an error: ' + err);
               cb(null, null);
@@ -145,8 +174,57 @@ module.exports = function(Artist) {
               cb(null, response);
               return;
           }
+       });
+  };
+
+  Artist.searchVideosByAAndS = function(song, artist, cb) {
+
+      if (song == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+
+    var resp;
+    var query = song + " by " + artist;
+    ga.youtubeSearch(query, function(err, response) {
+    	  if (err) {
+    	      console.log('The API returned an error: ' + err);
+              cb(null, null);
+              return;
+    	  }
+          if (response) {
+              console.log(util.inspect(response, false, null));
+	      cb(null, null)
+		  //              cb(null, response);
+              return;
+          }
     	});
   };
+
+  Artist.searchAlbum = function(song, album, artist, cb) {
+
+      if (song == null && album == null && artist == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+//      GN.register(function(err, uid) {
+//	      // store this somewhere for the next session
+//	      console.log("Gracenote user ID: " + uid);
+//	      //              cb(null, uid);
+//      });      
+      GN.searchTrack(artist, album, song, function(err, result) {
+	  if (err) {
+              console.log(err);
+              cb(null, null);
+              return;
+	  }
+          console.log(result);
+          cb(null, result);
+      });
+  };
+
 
   Artist.googleAuth = function(code, cb) {
 
@@ -250,6 +328,23 @@ module.exports = function(Artist) {
       },
      accepts: [
 	        { arg: 'song', type: 'string'},
+	        { arg: 'artist', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'songs', type: 'object'}
+              ]
+         });
+
+
+  Artist.remoteMethod(
+    'searchAlbum', {
+      http: {
+        path: '/searchAlbum',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'song', type: 'string'},
+	        { arg: 'album', type: 'string'},
 	        { arg: 'artist', type: 'string'}
 	      ],
      returns: [

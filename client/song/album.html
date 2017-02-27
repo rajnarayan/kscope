@@ -1,0 +1,31 @@
+<div ng-init="ctrl.searchAlbum()">
+  <!-- h3 ng-show="ctrl.songs.recordings.length">Search Results</h3 -->
+  <table class="table table-striped"
+         ng-show="ctrl.songs.length" cellpadding="10">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Img</th>
+        <th>Album Title</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Date</th>
+        <th>Tracks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="album in ctrl.songs">
+        <th>{{ album.album_gnid }}</th>
+        <td><img ng-src="{{ album.artist_image_url }}" width="100px"></img></td>
+        <td>{{ album.album_title }}</td>
+        <td>{{ album.album_artist_name }}</td>
+        <td>
+            <div ng-repeat="genre in album.genre"><span>{{ genre.text }}</span>,<br/></div>
+        </td>
+        <td>{{ album.album_year }}</td>
+        <td><div ng-repeat="track in album.tracks"><span>{{ track.track_title }} - {{ track.track_artist_name }}</span><br/></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

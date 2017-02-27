@@ -188,7 +188,8 @@ module.exports = function () {
            console.log(auth);
            var service = google.youtube('v3');
             service.search.list({
-        	    auth: auth,
+        	auth: auth,
+		order: 'relevance',
                 part: 'id,snippet',
                 q: query
     	    }, callback);
