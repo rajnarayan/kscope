@@ -38,6 +38,12 @@ angular
         controller: 'SongController',
         controllerAs: 'ctrl'
         })
+      .state('song.events', {
+        url: '/events',
+        templateUrl: 'song/events.html',
+        controller: 'SongController',
+        controllerAs: 'ctrl'
+        })
       .state('song.videos', {
         url: '/videos',
         templateUrl: 'song/videos.html',
@@ -67,6 +73,7 @@ function SongController($stateParams, $location, Artist) {
     var lyrics;
     var videos;
     var news;
+    var events;
   
     ctrl.initState = () => {
         if($stateParams.artist) ctrl.artist = $stateParams.artist;
@@ -117,6 +124,20 @@ function SongController($stateParams, $location, Artist) {
 	Artist.searchNewsByArtist(params).$promise
 	    .then(news => {
 	    	ctrl.news = news.news;
+	        })
+            .catch(err => {
+              console.log(err);
+            });
+    }
+
+   ctrl.searchEventsByArtist = () => {
+        ctrl.initState();
+        artist = ctrl.artist;
+        
+        const params = { artist };
+	Artist.searchEventsByArtist(params).$promise
+	    .then(events => {
+	    	ctrl.events = events.events;
 	        })
             .catch(err => {
               console.log(err);

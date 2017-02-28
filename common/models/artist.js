@@ -24,6 +24,11 @@ module.exports = function(Artist) {
   //  var userId    = "51044503332816635-F643EB286C619F0C4869D42B3EA29C8E";
   var GN = new Gracenote(clientId,clientTag,userId);
 
+
+  var ef = require('eventful-node');
+  var eventFulKey = "n5T82hpn6Vtg6D2v";
+  var eventful = new ef.Client(eventFulKey);
+
   //MusixMatch API
   var lyr = require('lyrics-fetcher');
 
@@ -277,6 +282,32 @@ module.exports = function(Artist) {
 	});
   };
 
+  Artist.searchEventsByArtist = function(artist, cb) {
+
+      if (artist == null) {
+          console.log("No search term");
+          cb(null, null);
+          return;
+      }
+ 
+      eventful.searchEvents({ keywords: artist }, function(err, data){
+ 
+	if(err){
+  	    console.log(err);
+            cb(null, null);
+            return;
+  	}
+  
+	console.log('Recieved ' + data.search.total_items + ' events');
+	console.log('Event listings: ');
+	//print the title of each event 
+	for(var i in data.search.events.event){
+	    console.log(data.search.events.event[i]);
+	}
+        cb(null, data.search);
+      });
+  };
+
   Artist.remoteMethod(
     'status', {
       http: {
@@ -437,6 +468,20 @@ module.exports = function(Artist) {
 	      ],
      returns: [
 	        { arg: 'news', type: 'object'}
+              ]
+         });
+
+  Artist.remoteMethod(
+    'searchEventsByArtist', {
+      http: {
+        path: '/searchEventsByArtist',
+        verb: 'post',
+      },
+     accepts: [
+	        { arg: 'artist', type: 'string'}
+	      ],
+     returns: [
+	        { arg: 'events', type: 'object'}
               ]
          });
 
