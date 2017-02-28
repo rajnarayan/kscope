@@ -2,20 +2,21 @@
 
 module.exports = function(Artist) {
 
-  //MusicBrainz
+  //MusicBrainz API
   var NB    = require('nodebrainz');
   var nb    = new NB({userAgent:'kscope/0.1 ( http://localhost )'});
 	    
-  // Youtube
+
 //  var GA    = require('../../server/googleapi.js');
 //  var ga    = new GA();
   var util  = require('util');
 
+  //Google API
   var google = require('googleapis');
   var GOOGLE_API_KEY = 'AIzaSyAA75xUV5Rxhtd5Zxo5Vw7Nc7IKKCOq_N8'; // specify your API key here
   var googleService = google.youtube('v3');
 
-  //Gracenote
+  //Gracenote API
   var Gracenote = require("node-gracenote");
   var clientId  = "864237780-FF3616097A52880965697A0A4ADC1DA3";
   var clientTag = "FF3616097A52880965697A0A4ADC1DA3";
@@ -23,8 +24,11 @@ module.exports = function(Artist) {
   var userId    = "51044503332816635-F643EB286C619F0C4869D42B3EA29C8E";
   var GN = new Gracenote(clientId,clientTag,userId);
 
-  //MusixMatch
+  //MusixMatch API
   var lyr = require('lyrics-fetcher');
+
+  var wh = require('webhoseio/webhoseio.js');
+  var webhoseio = wh.config({token: '921fa2e6-ad2c-4d93-82ac-842d041399b7'});
 
   Artist.status = function(cb) {
     var currentDate = new Date();
@@ -249,26 +253,27 @@ module.exports = function(Artist) {
       });
   };
 
-  Artist.googleAuth = function(code, cb) {
+  Artist.searchNewsByArtist = function(artist, cb) {
 
-      if (code == null) {
-          console.log("No google auth code");
+      if (artist == null) {
+          console.log("No search term");
           cb(null, null);
           return;
       }
-
-      ga.getToken(code, function(err, tokens) {
-    	  if (err) {
-    	      console.log('The API returned an error: ' + err);
-              cb(null, null);
-              return;
-    	  }
-          if (response) {
-              console.log(util.inspect(response, false, null));
-              cb(null, tokens);
-              return;
-          }
-    	});
+ 
+    var query = artist + " thread.title:(" + artist + ") language:(english) thread.country:US (site_type:news)"
+    webhoseio.query('filterWebData', {q: query, size:10})
+    .then(output => {
+	    console.log(output['totalResults']);
+	    // 15565094
+	    console.log(output['posts'].length);
+	    // 10
+	    console.log(output['posts'][0]['language']);
+	    // english
+	    console.log(output['posts'][0]["title"]);
+	    // Putting quotes around dictionary keys in JS
+            cb(null, output);
+	});
   };
 
   Artist.remoteMethod(
@@ -421,16 +426,17 @@ module.exports = function(Artist) {
          });
 
   Artist.remoteMethod(
-    'googleAuth', {
+    'searchNewsByArtist', {
       http: {
-        path: '/googleAuth',
+        path: '/searchNewsByArtist',
         verb: 'post',
       },
      accepts: [
-	        { arg: 'code', type: 'string'}
+	        { arg: 'artist', type: 'string'}
 	      ],
      returns: [
-	        { arg: 'authToken', type: 'string'}
+	        { arg: 'news', type: 'object'}
               ]
          });
+
 };

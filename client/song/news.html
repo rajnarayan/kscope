@@ -1,0 +1,47 @@
+<div ng-init="ctrl.searchNewsByArtist()">
+<h3 ng-show="ctrl.artist">{{ ctrl.artist }}, In the News</h3>
+  <!-- h3 ng-show="ctrl.videos.items.length">Videos for Song: {{ ctrl.song }}</h3 -->
+  <table class="table table-striped"
+         ng-show="ctrl.news.posts.length" cellpadding="10">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:20%">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Source</th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Entities</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="post in ctrl.news.posts">
+        <td>{{ post.published | date:'medium'}}</th>
+        <td>{{ post.thread.site }}</th>
+        <td><a ng-href="{{post.url}}"><img width="100px" ng-src="{{ post.thread.main_image }}"/></a></th>
+        <th><a ng-href="{{post.url}}">{{ post.title }}</a></th>
+        <th>{{ post.text  | limitTo: 200}}...</th>
+        <td>
+            <h3>People</h3>
+            <div ng-repeat="person in post.entities.persons">
+                <span>{{ person.name }} - {{ person.sentiment }}<span>,<br/>
+            </div>
+            <h3>Places</h3>
+            <div ng-repeat="person in post.entities.locations">
+                <span>{{ person.name }} - {{ person.sentiment }}<span>,<br/>
+            </div>
+            <h3>Orgs</h3>
+            <div ng-repeat="person in post.entities.organizations">
+                <span>{{ person.name }} - {{ person.sentiment }}<span>,<br/>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

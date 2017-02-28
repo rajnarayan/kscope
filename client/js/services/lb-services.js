@@ -6926,7 +6926,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Artist#googleAuth
+             * @name lbServices.Artist#searchNewsByArtist
              * @methodOf lbServices.Artist
              *
              * @description
@@ -6942,7 +6942,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             *  - `code` – `{string=}` -
+             *  - `artist` – `{string=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6956,10 +6956,10 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * Data properties:
              *
-             *  - `authToken` – `{string=}` -
+             *  - `news` – `{object=}` -
              */
-            "googleAuth": {
-              url: urlBase + "/artists/googleAuth",
+            "searchNewsByArtist": {
+              url: urlBase + "/artists/searchNewsByArtist",
               method: "POST",
             },
           }

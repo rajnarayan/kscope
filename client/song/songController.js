@@ -32,6 +32,12 @@ angular
         controller: 'SongController',
         controllerAs: 'ctrl'
         })
+      .state('song.news', {
+        url: '/news',
+        templateUrl: 'song/news.html',
+        controller: 'SongController',
+        controllerAs: 'ctrl'
+        })
       .state('song.videos', {
         url: '/videos',
         templateUrl: 'song/videos.html',
@@ -44,12 +50,6 @@ angular
         controller: 'SongController',
         controllerAs: 'ctrl'
          })
-      .state('oauth', {
-        url: '/google_oauth?callback',
-	templateUrl: 'views/google_oauth.html',
-        controller: 'SongController',
-        controllerAs: 'ctrl'
-      })
       $urlRouterProvider.otherwise('songs');
 	}]);
 
@@ -66,21 +66,8 @@ function SongController($stateParams, $location, Artist) {
     var song;
     var lyrics;
     var videos;
+    var news;
   
-    var authToken;
-        
-    ctrl.getToken = () => {
-        var code = $location.search().code;
-        const params = { code };
-	Artist.googleAuth(params).$promise
-	    .then(authToken => {
-	    	ctrl.authToken = authToken.authToken;
-	        })
-            .catch(err => {
-              console.log(err);
-            });
-    }
-
     ctrl.initState = () => {
         if($stateParams.artist) ctrl.artist = $stateParams.artist;
         if($stateParams.album) ctrl.album = $stateParams.album;
@@ -116,6 +103,20 @@ function SongController($stateParams, $location, Artist) {
 	Artist.getLyrics(params).$promise
 	    .then(lyrics => {
 	    	ctrl.lyrics = lyrics.lyrics;
+	        })
+            .catch(err => {
+              console.log(err);
+            });
+    }
+
+    ctrl.searchNewsByArtist = () => {
+        ctrl.initState();
+        artist = ctrl.artist;
+        
+        const params = { artist };
+	Artist.searchNewsByArtist(params).$promise
+	    .then(news => {
+	    	ctrl.news = news.news;
 	        })
             .catch(err => {
               console.log(err);
