@@ -21,7 +21,7 @@ module.exports = function(Artist) {
   var clientId  = "864237780-FF3616097A52880965697A0A4ADC1DA3";
   var clientTag = "FF3616097A52880965697A0A4ADC1DA3";
   var userId    = null;
-  var userId    = "51044503332816635-F643EB286C619F0C4869D42B3EA29C8E";
+  //  var userId    = "51044503332816635-F643EB286C619F0C4869D42B3EA29C8E";
   var GN = new Gracenote(clientId,clientTag,userId);
 
   //MusixMatch API
@@ -217,20 +217,21 @@ module.exports = function(Artist) {
           cb(null, null);
           return;
       }
-//      GN.register(function(err, uid) {
-//	      // store this somewhere for the next session
-//	      console.log("Gracenote user ID: " + uid);
-//	      //              cb(null, uid);
-//      });      
-      GN.searchTrack(artist, album, song, function(err, result) {
-	  if (err) {
-              console.log(err);
-              cb(null, null);
-              return;
-	  }
-          console.log(result);
-          cb(null, result);
-      });
+      GN.register(function(err, uid) {
+	      // store this somewhere for the next session
+	      console.log("Gracenote user ID: " + uid);
+	      //              cb(null, uid);
+
+          GN.searchTrack(artist, album, song, function(err, result) {
+    	      if (err) {
+                  console.log(err);
+                  cb(null, null);
+                  return;
+    	      }
+              console.log(result);
+              cb(null, result);
+          });
+      });      
   };
 
 
