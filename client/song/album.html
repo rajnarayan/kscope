@@ -1,7 +1,7 @@
 <div ng-init="ctrl.searchAlbum()">
   <!-- h3 ng-show="ctrl.songs.recordings.length">Search Results</h3 -->
   <table class="table table-striped"
-         ng-show="ctrl.songs.length" cellpadding="10">
+         ng-show="ctrl.songs.length" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="album in ctrl.songs">
-        <th>{{ album.album_gnid }}</th>
+        <td>{{ album.album_gnid }}</td>
         <td><img ng-src="{{ album.artist_image_url }}" width="100px"></img></td>
         <td>{{ album.album_title }}</td>
         <td>{{ album.album_artist_name }}</td>

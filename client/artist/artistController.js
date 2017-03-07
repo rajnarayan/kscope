@@ -65,19 +65,20 @@ function ArtistController($stateParams, $location, Artist) {
     var recording;
 
     ctrl.initState = () => {
-        if($location.search().artistId) ctrl.artistId = $location.search().artistId;
         if($stateParams.artistId) ctrl.artistId = $stateParams.artistId;
-        if($location.search().info) ctrl.info = $location.search().info;
         if($stateParams.info) ctrl.info = $stateParams.info;
-        ctrl.keywords = $stateParams.keywords;
-
-        if($location.search().releaseId) ctrl.releaseId = $location.search().releaseId;
         if($stateParams.releaseId) ctrl.releaseId = $stateParams.releaseId;
-        if($location.search().recordingId) ctrl.recordingId = $location.search().recordingId;
         if($stateParams.recordingId) ctrl.recordingId = $stateParams.recordingId;
+        if($stateParams.keywords) ctrl.keywords = $stateParams.keywords;
+
+        if($location.search().artistId) ctrl.artistId = $location.search().artistId;
+        if($location.search().info) ctrl.info = $location.search().info;
+        if($location.search().releaseId) ctrl.releaseId = $location.search().releaseId;
+        if($location.search().recordingId) ctrl.recordingId = $location.search().recordingId;
+        if($location.search().keywords) ctrl.keywords = $location.search().keywords;
     }
 
-    ctrl.searchArtist = (keywords) => {
+    ctrl.searchArtist = () => {
         ctrl.initState();
         artistId = ctrl.artistId;
         info     = ctrl.info;

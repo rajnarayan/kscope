@@ -1,29 +1,50 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid" ng-init="ctrl.initState()">
-    <!-- div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div -->
-    <ul class="nav navbar-nav">
-          <li>
-            <a ui-sref="song.songs({song: ctrl.song, artist: ctrl.artist})" ui-sref-active="active">Songs</a>
+<div class="container-fluid" ng-init="ctrl.initState()">
+  <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+
+        <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Search Song</a>
+      </div>
+    
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+      
+        <ul class="nav navbar-nav">
+          <li ui-sref-active="active"><a ui-sref="song.songs({song: ctrl.song, artist: ctrl.artist})">Recordings</a></li>
+          <li ui-sref-active="active">
+            <a ui-sref="song.lyrics({song: ctrl.song, artist: ctrl.artist})">Lyrics</a>
           </li>
-          <li>
-            <a ui-sref="song.lyrics({song: ctrl.song, artist: ctrl.artist})" ui-sref-active="active">Lyrics</a>
+          <li ui-sref-active="active">
+            <a ui-sref="song.news({artist: ctrl.artist})">News</a>
           </li>
-          <li>
-            <a ui-sref="song.news({artist: ctrl.artist})" ui-sref-active="active">News</a>
+          <li ui-sref-active="active">
+            <a ui-sref="song.events({artist: ctrl.artist})">Events</a>
           </li>
-          <li>
-            <a ui-sref="song.events({artist: ctrl.artist})" ui-sref-active="active">Events</a>
+          <li ui-sref-active="active">
+            <a ui-sref="song.videos({song: ctrl.song, artist: ctrl.artist})">Videos</a>
           </li>
-          <li>
-            <a ui-sref="song.videos({song: ctrl.song, artist: ctrl.artist})" ui-sref-active="active">Videos</a>
+          <li ui-sref-active="active">
+            <a ui-sref="song.album({song: ctrl.song, album: ctrl.album, artist: ctrl.artist})">Albums</a>
           </li>
-          <li>
-            <a ui-sref="song.album({song: ctrl.song, album: ctrl.album, artist: ctrl.artist})" ui-sref-active="active">Album</a>
-          </li>
-    </ul>
-  </div>
-</nav>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <div class="form-group">Song: <input type="text" ng-model="ctrl.song"   class="input-medium search-query" placeholder="The End...." value="The End"></input></div>
+                <div class="form-group">Artist:<input type="text" ng-model="ctrl.artist"   class="input-medium search-query" placeholder="The Doors...." value="The Doors"></input></div>
+                <div class="form-group">Album:<input type="text" ng-model="ctrl.album"   class="input-medium search-query" placeholder="The Doors...." value="The Doors"></input></div>
+                <button ui-sref="song.songs({song: ctrl.song, album: ctrl.album, artist: ctrl.artist})" class="btn" >Search</button>
+            </div>
+        </form>
+
+      </div><!-- /.navbar-collapse -->
+    </nav>
+
+</div>
 
 

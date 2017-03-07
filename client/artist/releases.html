@@ -2,7 +2,7 @@
 <div ng-init="ctrl.lookupArtist()" ng-show="ctrl.artists.releases">
   <h3 ng-show="ctrl.artists.releases.length">Releases for {{ ctrl.artists.name }}</h3>
   <table class="table table-striped"
-         ng-show="ctrl.artists.releases.length" cellpadding="10">
+         ng-show="ctrl.artists.releases.length" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="release in ctrl.artists.releases">
-        <th><a ui-sref="search.release({artistId: ctrl.artistId, releaseId: release.id, info: ''})">{{ release.id }}</a></th>
+        <td><a ui-sref="search.release({artistId: ctrl.artistId, releaseId: release.id, info: ''})">{{ release.id }}</a></td>
         <td>{{ release.title }}</th>
         <td>{{ release.date }}</td>
         <td>{{ release.country }}</td>

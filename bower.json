@@ -1,0 +1,21 @@
+{
+  "name": "client",
+  "homepage": "https://github.com/rajnarayan/kscope",
+  "authors": [
+    "rajnarayan <raj.narayan@gmail.com>"
+  ],
+  "description": "",
+  "main": "bower.json",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-responsive-tables": "^0.4.4"
+  }
+}

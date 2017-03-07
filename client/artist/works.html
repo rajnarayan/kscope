@@ -2,7 +2,7 @@
 <div ng-init="ctrl.lookupArtist()" ng-show="ctrl.artists.works">
   <h3 ng-show="ctrl.artists.works.length">Works for {{ ctrl.artists.name }}</h3>
   <table class="table table-striped"
-         ng-show="ctrl.artists.works.length" cellpadding="10">
+         ng-show="ctrl.artists.works.length" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -14,8 +14,8 @@
     </thead>
     <tbody>
       <tr ng-repeat="work in ctrl.artists.works">
-        <th>{{ work.id }}</a></th>
-        <td>{{ work.title }}</th>
+        <td>{{ work.id }}</a></td>
+        <td>{{ work.title }}</td>
         <td>{{ work.language }}</td>
         <td>{{ work.type }}</td>
         <td>{{ work.disambiguation }}</td>

@@ -2,7 +2,7 @@
 <div ng-init="ctrl.lookupRelease()" ng-show="ctrl.recordings">
   <h3 ng-show="ctrl.recordings.media[0].tracks.length">Recordings for Release {{ ctrl.recordings.title}}</h3>
   <table class="table table-striped"
-         ng-show="ctrl.recordings.media[0].tracks.length" cellpadding="10">
+         ng-show="ctrl.recordings.media[0].tracks.length" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="recording in ctrl.recordings.media[0].tracks">
-        <th><a ui-sref="search.recording({artistId: ctrl.artistId, releaseId: ctrl.releaseId, recordingId: recording.id, info: ''})">{{ recording.id }}</a></th>
+        <td><a ui-sref="search.recording({artistId: ctrl.artistId, releaseId: ctrl.releaseId, recordingId: recording.id, info: ''})">{{ recording.id }}</a></td>
         <td>{{ recording.title }}</th>
         <td>{{ recording.length }}</td>
       </tr>

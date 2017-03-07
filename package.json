@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
+    "prestart": "./node_modules/.bin/bower install",
     "lint": "eslint .",
     "dev": "node-inspector & nodemon --debug .",
     "start": "node .",
-    "posttest": "npm run lint && nsp check"
+    "posttest": "npm run lint && nsp check",
+    "postinstall": "bower install"
   },
   "dependencies": {
     "async": "^2.1.2",
+    "bower": "*",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "eventful-node": "^1.1.1",

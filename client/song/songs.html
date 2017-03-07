@@ -1,7 +1,7 @@
 <div ng-init="ctrl.searchSong()">
   <!-- h3 ng-show="ctrl.songs.recordings.length">Search Results</h3 -->
   <table class="table table-striped"
-         ng-show="ctrl.songs.recordings.length" cellpadding="10">
+         ng-show="ctrl.songs.recordings.length" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -13,8 +13,8 @@
     </thead>
     <tbody>
       <tr ng-repeat="recording in ctrl.songs.recordings">
-        <th>{{ recording.id }}</th>
-        <td>{{ recording.title }}</th>
+        <td>{{ recording.id }}</td>
+        <td>{{ recording.title }}</td>
         <td>
             <div ng-repeat="artist in recording['artist-credit']">
                 <a ui-sref="song.songs({song: ctrl.song, artist: artist.artist.name})">{{ artist.artist.name }}<a><br/>

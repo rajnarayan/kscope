@@ -57,7 +57,7 @@ angular
         controllerAs: 'ctrl'
          })
       $urlRouterProvider.otherwise('songs');
-	}]);
+      }]);
 
 angular
   .module('song')

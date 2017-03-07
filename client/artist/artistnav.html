@@ -1,23 +1,45 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid" ng-init="ctrl.initState()" ng-show"ctrl.artistId">
-    <!-- div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div -->
-    <ul class="nav navbar-nav">
-          <li>
-            <a ui-sref="search.releases({artistId: ctrl.artistId, info: 'releases'})" ui-sref-active="active">Releases</a>
+<div class="container-fluid" ng-init="ctrl.initState()">
+  <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+
+        <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Search Artist</a>
+      </div>
+    
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+      
+        <ul class="nav navbar-nav">
+          <li ui-sref-active="active">
+            <a ui-sref="search.releases({artistId: ctrl.artistId, info: 'releases'})">Releases</a>
           </li>
-          <li>
-            <a ui-sref="search.works({artistId: ctrl.artistId, info: 'works'})" ui-sref-active="active">Works</a>
+          <li ui-sref-active="active">
+            <a ui-sref="search.works({artistId: ctrl.artistId, info: 'works'})">Works</a>
           </li>
-          <li>
-            <a ui-sref="search.recordings({artistId: ctrl.artistId, info: 'recordings'})" ui-sref-active="active">Recordings</a>
+          <li ui-sref-active="active">
+            <a ui-sref="search.recordings({artistId: ctrl.artistId, info: 'recordings'})">Recordings</a>
           </li>
-          <li>
-            <a ui-sref="search.release({artistId: ctrl.artistId, releaseId: ctrl.releaseId, info: 'recordings'})" ui-sref-active="active">Release</a>
+          <li ui-sref-active="active">
+            <a ui-sref="search.release({artistId: ctrl.artistId, releaseId: ctrl.releaseId, info: 'recordings'})">Release</a>
           </li>
-    </ul>
-  </div>
-</nav>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                Artist: <input type="text" ng-model="ctrl.keywords" class="input-medium search-query" placeholder="Madonna..." value="madonna">
+                <!-- ID: <input type="text" ng-model="ctrl.artistId" class="input-medium search-query" placeholder="Madonna..." value="madonna"> -->
+                <!-- button ng-click="ctrl.searchArtist()" class="btn">Search</button -->
+                <button ui-sref="search({keywords: ctrl.keywords})" class="btn">Search</button>
+            </div>
+        </form>
+
+      </div><!-- /.navbar-collapse -->
+    </nav>
+</div>
 
 

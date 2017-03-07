@@ -1,9 +1,8 @@
 <ng-include src="'artist/artistnav.html'"></ng-include>
 <div ng-init="ctrl.lookupRecording()" ng-show="ctrl.recording">
-{{ ctrl.recording }}
   <h3 ng-show="ctrl.recording">Recording { ctrl.recording.title}}</h3>
   <table class="table table-striped"
-         ng-show="ctrl.recording" cellpadding="10">
+         ng-show="ctrl.recording" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -13,7 +12,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="recording in ctrl.recordings.media[0].tracks">
-        <th><a ui-sref="discover({artistId: ctrl.artistId, releaseId: ctrl.releaseId, recordingId, recording.id, info: 'recordings'})">{{ recording.id }}</a></th>
+        <td><a ui-sref="discover({artistId: ctrl.artistId, releaseId: ctrl.releaseId, recordingId, recording.id, info: 'recordings'})">{{ recording.id }}</a></td>
         <td>{{ recording.title }}</th>
         <td>{{ recording.length }}</td>
       </tr>

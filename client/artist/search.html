@@ -1,15 +1,6 @@
 <div ng-init="ctrl.searchArtist()">
-    <br/>
-    <form class="well form-search">
-        <label>Artist Search:</label>
-        <input type="text" ng-model="ctrl.keywords" class="input-medium search-query" placeholder="Madonna..." value="madonna">
-        <button ui-sref="search({keywords: ctrl.keywords})" class="btn">Search</button>
-    </form>
-
-  <br/>
-  <h3 ng-show="ctrl.artists.artists.length">Search Results</h3>
   <table class="table table-striped"
-         ng-show="ctrl.artists.artists.length" cellpadding="10">
+         ng-show="ctrl.artists.artists.length && !ctrl.artistId" cellpadding="10" wt-responsive-table>
     <thead>
       <tr>
         <th>ID</th>
@@ -21,8 +12,8 @@
     </thead>
     <tbody>
       <tr ng-repeat="artist in ctrl.artists.artists">
-        <th><a ui-sref="search.releases({artistId: artist.id, info: 'releases'})">{{ artist.id }}</a></th>
-        <td>{{ artist.name }}</th>
+        <td><a ui-sref="search.releases({artistId: artist.id, info: 'releases'})">{{ artist.id }}</a></td>
+        <td>{{ artist.name }}</td>
         <td>{{ artist.gender }}</td>
         <td>{{ artist.country }}</td>
         <td>{{ artist.type }}</td>

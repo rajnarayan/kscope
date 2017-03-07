@@ -7,6 +7,7 @@ angular
   .module('app', [
     'ui.router',
     'lbServices',
+    'wt.responsive',
     'artist',
     'song'
   ])

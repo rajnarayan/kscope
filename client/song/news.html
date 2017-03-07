@@ -2,7 +2,7 @@
 <h3 ng-show="ctrl.artist">{{ ctrl.artist }}, In the News</h3>
   <!-- h3 ng-show="ctrl.videos.items.length">Videos for Song: {{ ctrl.song }}</h3 -->
   <table class="table table-striped"
-         ng-show="ctrl.news.posts.length" cellpadding="10">
+         ng-show="ctrl.news.posts.length" cellpadding="10" wt-responsive-table>
         <col style="width:10%">
         <col style="width:10%">
         <col style="width:20%">
@@ -22,11 +22,11 @@
     </thead>
     <tbody>
       <tr ng-repeat="post in ctrl.news.posts">
-        <td>{{ post.published | date:'medium'}}</th>
-        <td>{{ post.thread.site }}</th>
-        <td><a ng-href="{{post.url}}"><img width="100px" ng-src="{{ post.thread.main_image }}"/></a></th>
-        <th><a ng-href="{{post.url}}">{{ post.title }}</a></th>
-        <th>{{ post.text  | limitTo: 200}}...</th>
+        <td>{{ post.published | date:'medium'}}</td>
+        <td>{{ post.thread.site }}</td>
+        <td><a ng-href="{{post.url}}"><img width="100px" ng-src="{{ post.thread.main_image }}"/></a></td>
+        <th><a ng-href="{{post.url}}">{{ post.title }}</a></td>
+        <th>{{ post.text  | limitTo: 200}}...</td>
         <td>
             <h3>People</h3>
             <div ng-repeat="person in post.entities.persons">
