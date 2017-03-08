@@ -1,7 +1,6 @@
 /* original: http://css-tricks.com/responsive-data-tables/ */
 
 .responsive {
-    width: 100%;
     border-collapse: collapse;
 }
 
