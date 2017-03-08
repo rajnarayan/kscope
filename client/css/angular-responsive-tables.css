@@ -4,12 +4,7 @@
     border-collapse: collapse;
 }
 
-@media only screen 
-  and (max-width: 800px),
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 3) 
-{
+@media only screen and (max-width: 800px), only screen and (min-device-width : 375px) and (max-device-width : 667px) {
 
     /* Force table to not be like tables anymore */
     /* table.responsive,*/
