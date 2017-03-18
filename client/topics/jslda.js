@@ -25,7 +25,7 @@ var QueryString = function () {
 
 // Change the strings at the end of these lines to reset the default filenames!
 
-var documentsURL = QueryString.docs ? QueryString.docs : "url_lda_documents.txt";
+var documentsURL = QueryString.docs ? QueryString.docs : "url_lda_sample_documents.txt";
 var stopwordsURL = QueryString.stoplist ? QueryString.stoplist : "stoplist.txt";
 
 documentsURL = decodeURIComponent(documentsURL);
